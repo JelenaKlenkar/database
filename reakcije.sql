@@ -39,10 +39,10 @@ kemijskareakcija int not null
 );
 
 alter table reaktant add foreign key(kemikalija) references kemikalija(sifra);
-alter table reaktant add foreign key(kemijskareakcija) references kemijskareakcija(sifra);
+alter table reaktant add foreign key(kemijskareakcija) references kemijskareakcija(sifra) on delete cascade;
 alter table produkt add foreign key(kemikalija) references kemikalija(sifra);
-alter table produkt add foreign key(kemijskareakcija) references kemijskareakcija(sifra);
-alter table uvjet add foreign key(kemijskareakcija) references kemijskareakcija(sifra);
+alter table produkt add foreign key(kemijskareakcija) references kemijskareakcija(sifra) on delete cascade;
+alter table uvjet add foreign key(kemijskareakcija) references kemijskareakcija(sifra) on delete cascade;
 
 
 insert into kemikalija(naziv,gustoca, temperaturavrelista,temperaturatalista) values 
@@ -78,6 +78,11 @@ update kemijskareakcija set naziv ='Industrijsko dobivanje amonijaka' where sifr
 update reaktant set kemikalija =7 where sifra =3;
 update produkt set kemikalija =3  where sifra=1;
 
+delete from reaktant where sifra = 3 and sifra = 4;
+delete from produkt where sifra = 4;
+delete from kemikalija where sifra = 6 and sifra = 7;
+delete from uvjet where sifra = 2;
+delete from kemijskareakcija where sifra = 2;
 
 
 
