@@ -1,5 +1,4 @@
-#izvođenje
-#ova datoteka se nalazi na E:\
+
 /*
 c:\xampp\mysql\bin\mysql -ujelena -pjelena --default_character_set=utf8 < "E:\animal.sql"
 */
