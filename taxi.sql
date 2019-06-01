@@ -58,9 +58,18 @@ insert into passenger (firstName,departure, arrival,ride) values
 #3
 ('Linda','Edunova','Tvrđa',3),
 #4
-('Marko','Ekonomski fakultet Osijek','Dom zdravlja Osijek',4),
+('Marko','Economical college Osijek','Health home Osijek',4),
 #5
-('Ana','Ekonomski fakultet Osijek','Dom zdravlja Osijek',5);
+('Ana','Economical college Osijek','Health home Osijek',5);
+
+update passenger set firstName = 'Molly' where id = 4;
+
+
+delete from passenger where id=3;
+delete from ride where id=3;
+delete from vehicle where id =2;
+
+
 
 
 
