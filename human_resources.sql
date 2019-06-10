@@ -68,7 +68,7 @@ id int not null primary key auto_increment,
 typeOfTesting varchar(100) not null,
 dateOfTesting datetime  not null,
 testingTime int,
-resultOfTesting boolean not null, 
+resultOfTesting varchar(50) not null, 
 jobApplication int not null
 );
 
@@ -170,9 +170,9 @@ insert into jobApplication(dateOfReceive,timeOfReceive,numberOfApplication,jobPo
 ;
 
 insert into testing(typeOfTesting,dateOfTesting,resultOfTesting,jobApplication) values 
-('knowledge test','2019-06-17', true,1),('Knowledge test','2019-06-17',true,2),('Knowledge test','2019-06-17',false,3),
-('knowledge test','2019-06-20',true,4),('knowledge test','2019-06-20',false,5), 
-('Psychological test', '2019-06-22', true,1),('Psychological test','2019-06-22',true,2),('Psychological test','2019-06-22',true,3);
+('knowledge test','2019-06-17', 'passed',1),('Knowledge test','2019-06-17','passed',2),('Knowledge test','2019-06-17','failed',3),
+('knowledge test','2019-06-20','passed',4),('knowledge test','2019-06-20','failed',5), 
+('Psychological test', '2019-06-22','passed',1),('Psychological test','2019-06-22','passed',2),('Psychological test','2019-06-22','passed',3);
 
 insert into interview(typeOfInterview,dateOfInterview,jobapplication) values 
 ('Entry Interview','2019-06-23',1),('Entry Interview','2019-06-23',2),('Entry Interview','2019-06-23',3),
