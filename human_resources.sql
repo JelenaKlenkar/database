@@ -4,19 +4,6 @@ drop database if exists human_resources;
 create database human_resources default character set utf8;
 use human_resources;
 
-create table employee(
-id int not null primary key auto_increment,
-firstName varchar(50) not null,
-lastName varchar(50) not null,
-nameOfCompany varchar(100) not null,
-nameOfDepartment varchar(100) not null,
-jobPositionOfEmployee varchar(100) not null,
-superior int not null,
-email varchar(100) not null,
-phoneNumber int not null,
-personalIdentificationNumber int,
-jobOffer int not null
-);
 
 create table applicant(
 id int not null primary key auto_increment,
@@ -31,25 +18,10 @@ motivationalLetter varchar(2083) not null
 );
 
 
-create table jobAd(
-id int not null primary key auto_increment,
-advertisedDate datetime not null,
-closedDate datetime not null
-);
 create table jobPosition(
 id int not null primary key auto_increment,
 nameOfJobPosition varchar(100) not null,
-jobDescription varchar(300) not null,
-jobAd int not null 
-);
-
-create table criteria(
-id int not null primary key auto_increment,
-degreeOfEducation varchar(100) not null,
-jobExperience varchar(300) not null,
-foreignLanguage varchar(100) not null,
-drivingLicense boolean not null,
-jobAd int not null
+jobDescription varchar(300) not null
 );
 
 create table jobApplication(
@@ -58,17 +30,17 @@ dateOfReceive datetime not null,
 timeOfReceive time not null,
 numberOfApplication int not null,
 jobPosition int not null,
-applicant int not null,
-applicantSelection int not null
+applicant int not null
 
 );
+
 
 create table testing(
 id int not null primary key auto_increment,
 typeOfTesting varchar(100) not null,
 dateOfTesting datetime  not null,
 testingTime int,
-resultOfTesting varchar(50) not null, 
+resultOfTesting int not null, 
 jobApplication int not null
 );
 
@@ -81,29 +53,20 @@ jobApplication int not null
 
 create table jobOffer(
 id int not null primary key auto_increment,
-jobposition int not null,
 salary decimal(18,2) not null,
 startingDate datetime not null,
-applicantSelection int not null
+jobposition int not null,
+jobApplication int not null
 );
 
-create table applicantSelection(
-id int not null primary key auto_increment,
-selectionDate datetime not null,
-selected boolean not null
-);
 
-alter table employee add foreign key (superior) references employee(id);
-alter table criteria add foreign key(jobAd) references jobAd(id);
-alter table jobPosition add foreign key(jobAd) references jobAd(id);
+
 alter table jobApplication add foreign key(jobPosition)references jobPosition(id);
 alter table jobApplication add foreign key(applicant)references applicant(id);
 alter table testing add foreign key(jobApplication)references jobApplication(id);
 alter table interview add foreign key(jobApplication)references jobApplication(id);
 alter table jobOffer add foreign key(jobPosition)references jobPosition(id);
-alter table employee add foreign key(jobOffer) references jobOffer(id); 
-alter table jobApplication add foreign key (applicantSelection) references applicantSelection(id);
-alter table jobOffer add foreign key (applicantSelection) references applicantSelection(id);
+alter table jobOffer add foreign key(jobApplication) references jobApplication(id);
 
 insert into applicant(firstName,lastName,address,phoneNumber,email,applicantCV,motivationalLetter) values
 #1
@@ -122,67 +85,51 @@ insert into applicant(firstName,lastName,address,phoneNumber,email,applicantCV,m
 ('Charles','Simpson','3071 Ashcraft Court,California','091400000','c.simpson@hotmail.com',
 'https://www.monster.com/career-advice/article/sample-resume-QA-software-tester-midlevel','https://www.jobhero.com/qa-tester-cover-letter/');
 
-insert into jobAd(advertisedDate,closedDate) values
-#1
-('2019-05-29','2019-06-15'),
-#2
-('2019-06-05','2019-06-20');
 
-insert into jobPosition(nameOfJobPosition,jobDescription,jobAd) values 
+
+insert into jobPosition(nameOfJobPosition,jobDescription) values 
 #1
 ('Java developer','Designing and developing high-volume,low-latency applications for mission-critical systems
 and delivering high-availability and performance.Contributing in all phases of the development lifecycle. 
-Writing well designed, testable, efficient code.',1),
+Writing well designed, testable, efficient code.
+Required Bachelor and Master degree in Computer Science, Engineering and similar and 5 years experience in java development,excellent knowledge of sql.'),
 #2
 ('Quality assurance tester','Test new and existing features, debug code (units and integration) and report errors and failures,
 work collaboratively with the developing team to correct errors and participate in testing for product releases,gathering requirements and
-test automation and test methodology ',2);
+test automation and test methodology
+Required Bachelor degree in Computer science,Engineering and similar and 2 years experience as QA tester, 
+experience in project tracking software like JIRA,basic knowledge of various programming language(ex.Java,Python). ');
 
-insert into criteria(degreeOfEducation,jobExperience,foreignLanguage,drivingLicense,jobAd) values
-('Bachelor and Master degree in Computer Science, Engineering and similar.', '5 years experience in java development,excellent knowledge of sql','English','false',1),
-('Bachelor degree in Computer science,Engineering and similar', 
-'2 years experience as QA tester, experience in project tracking software like JIRA,basic knowledge of various programming language(ex.Java,Python)','English','false',2);
 
-insert into applicantSelection(selectionDate,selected) values
+
+
+insert into jobApplication(dateOfReceive,timeOfReceive,numberOfApplication,jobPosition,applicant) values
 #1
-('2019-06-25',true),
+('2019-06-05','18:20:54',1,1,1),
 #2
-('2019-06-25',false);
-
-insert into jobOffer(jobPosition,salary,startingdate,applicantSelection) values 
-#1
-(1,5883.30,'2019-07-01',1),
-#2
-(2,4333.58,'2019-07-01',1);
-
-
-insert into jobApplication(dateOfReceive,timeOfReceive,numberOfApplication,jobPosition,applicant,applicantSelection) values
-#1
-('2019-06-05','18:20:54',1,1,1,1),
-#2
-('2019-06-01','16:55:23',2,1,2,2),
+('2019-06-01','16:55:23',2,1,2),
 #3
-('2019-06-09','20:35:55',3,1,3,2),
+('2019-06-09','20:35:55',3,1,3),
 #4
-('2019-06-06','15:35:23',4,2,4,1),
+('2019-06-06','15:35:23',4,2,4),
 #5
-('2019-06-15','11:25:12',5,2,5,2)
+('2019-06-15','11:25:12',5,2,5)
 ;
 
 insert into testing(typeOfTesting,dateOfTesting,resultOfTesting,jobApplication) values 
-('knowledge test','2019-06-17', 'passed',1),('Knowledge test','2019-06-17','passed',2),('Knowledge test','2019-06-17','failed',3),
-('knowledge test','2019-06-20','passed',4),('knowledge test','2019-06-20','failed',5), 
-('Psychological test', '2019-06-22','passed',1),('Psychological test','2019-06-22','passed',2),('Psychological test','2019-06-22','passed',3);
+('knowledge test','2019-06-17', 92,1),('Knowledge test','2019-06-17','75',2),('Knowledge test','2019-06-17',45,3),
+('knowledge test','2019-06-20',89,4),('knowledge test','2019-06-20',39,5), 
+('Intelligence test', '2019-06-22',145,1),('Intelligence test','2019-06-22',115,2),('Intelligence test','2019-06-22',108,3);
 
 insert into interview(typeOfInterview,dateOfInterview,jobapplication) values 
 ('Entry Interview','2019-06-23',1),('Entry Interview','2019-06-23',2),('Entry Interview','2019-06-23',3),
 ('Technical Interview','2019-06-24',1),('Technical Interview','2019-06-24',2), ('Technical Interview','2019-06-24',4),('Technical Interview','2019-06-24',5),
 ('Final Interview','2019-06-25',1);
 
-insert into employee(firstName,lastName,nameOfCompany,nameOfDepartment,jobPositionOfEmployee,superior,email,phoneNumber,jobOffer) values
+insert into jobOffer(salary,startingDate,jobPosition,jobApplication) values 
+(5883.30,'2019-07-01',1,1),(4333.58,'2019-07-01',2,4);
 
-('Gary','White','Google','Engineering department','java developer',1,'g.white@google.com','099000000',1),
-('Darla','Washington','Google','Engineering department','QA tester',1,'d.washington@google.com','099100000',2);
+
 
 
 
