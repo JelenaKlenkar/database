@@ -55,8 +55,8 @@ create table jobOffer(
 id int not null primary key auto_increment,
 salary decimal(18,2) not null,
 startingDate datetime not null,
-jobposition int not null,
-jobApplication int not null
+jobApplication int not null,
+accept boolean not null
 );
 
 
@@ -65,7 +65,6 @@ alter table jobApplication add foreign key(jobPosition)references jobPosition(id
 alter table jobApplication add foreign key(applicant)references applicant(id);
 alter table testing add foreign key(jobApplication)references jobApplication(id);
 alter table interview add foreign key(jobApplication)references jobApplication(id);
-alter table jobOffer add foreign key(jobPosition)references jobPosition(id);
 alter table jobOffer add foreign key(jobApplication) references jobApplication(id);
 
 insert into applicant(firstName,lastName,address,phoneNumber,email,applicantCV,motivationalLetter) values
@@ -126,8 +125,8 @@ insert into interview(typeOfInterview,dateOfInterview,jobapplication) values
 ('Technical Interview','2019-06-24',1),('Technical Interview','2019-06-24',2), ('Technical Interview','2019-06-24',4),('Technical Interview','2019-06-24',5),
 ('Final Interview','2019-06-25',1);
 
-insert into jobOffer(salary,startingDate,jobPosition,jobApplication) values 
-(5883.30,'2019-07-01',1,1),(4333.58,'2019-07-01',2,4);
+insert into jobOffer(salary,startingDate,jobApplication,accept) values 
+(5883.30,'2019-07-01',1,true),(4333.58,'2019-07-01',4,false);
 
 
 
