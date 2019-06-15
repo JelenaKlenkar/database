@@ -39,6 +39,7 @@ create table testing(
 id int not null primary key auto_increment,
 typeOfTesting varchar(100) not null,
 dateOfTesting datetime  not null,
+numberOfTesting int not null,
 testingTime int,
 resultOfTesting int not null, 
 jobApplication int not null
@@ -46,8 +47,9 @@ jobApplication int not null
 
 create table interview(
 id int not null primary key auto_increment,
-typeOfInterview varchar(50),
-dateOfInterview datetime,
+typeOfInterview varchar(50) not null,
+dateOfInterview datetime not null,
+numberOfInterview int not null,
 jobApplication int not null
 );
 
@@ -115,18 +117,26 @@ insert into jobApplication(dateOfReceive,timeOfReceive,numberOfApplication,jobPo
 ('2019-06-15','11:25:12',5,2,5)
 ;
 
-insert into testing(typeOfTesting,dateOfTesting,resultOfTesting,jobApplication) values 
-('knowledge test','2019-06-17', 92,1),('Knowledge test','2019-06-17','75',2),('Knowledge test','2019-06-17',45,3),
-('knowledge test','2019-06-20',89,4),('knowledge test','2019-06-20',39,5), 
-('Intelligence test', '2019-06-22',145,1),('Intelligence test','2019-06-22',115,2),('Intelligence test','2019-06-22',108,3);
+insert into testing(typeOfTesting,dateOfTesting,numberOfTesting,resultOfTesting,jobApplication) values 
+('knowledge test','2019-06-17', 1, 92,1),('Knowledge test','2019-06-17',1,'75',2),('Knowledge test','2019-06-17',1,45,3),
+('knowledge test','2019-06-20',1,89,4),('knowledge test','2019-06-20',1,39,5), 
+('Intelligence test', '2019-06-22',2,145,1),('Intelligence test','2019-06-22',2,115,2),('Intelligence test','2019-06-22',2,108,3),('Intelligence test','2019-06-22',2,120,4);
 
-insert into interview(typeOfInterview,dateOfInterview,jobapplication) values 
-('Entry Interview','2019-06-23',1),('Entry Interview','2019-06-23',2),('Entry Interview','2019-06-23',3),
-('Technical Interview','2019-06-24',1),('Technical Interview','2019-06-24',2), ('Technical Interview','2019-06-24',4),('Technical Interview','2019-06-24',5),
-('Final Interview','2019-06-25',1);
+insert into interview(typeOfInterview,dateOfInterview, numberOfInterview, jobapplication) values 
+('Entry Interview','2019-06-23',1,1),('Entry Interview','2019-06-23',1,2),('Entry Interview','2019-06-23',1,3),
+('Technical Interview','2019-06-24',2,1),('Technical Interview','2019-06-24',2,2), ('Technical Interview','2019-06-24',1,4),('Technical Interview','2019-06-24',1,5),
+('Final Interview','2019-06-25',3,1);
 
 insert into jobOffer(salary,startingDate,jobApplication,accept) values 
 (5883.30,'2019-07-01',1,true),(4333.58,'2019-07-01',4,false);
+
+select a.firstName,a.lastName, b.applicant,b.jobPosition,c.numberOfTesting as testing,d.numberOfInterview as interview
+from applicant a inner join jobApplication b on a.id = b.applicant
+inner join testing c on b.id=c.jobApplication
+inner join interview d on b.id=d.jobApplication
+inner join jobOffer e on b.id=e.jobApplication
+where c.numberOfTesting >=2 and d.numberOfInterview =1 and e.accept=false;
+
 
 
 
