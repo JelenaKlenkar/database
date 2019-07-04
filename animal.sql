@@ -55,3 +55,4 @@ update animal set name ='Bubica' where id = 3;
 
 delete from animal where id =3;
 
+
