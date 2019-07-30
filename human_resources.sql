@@ -40,7 +40,6 @@ id int not null primary key auto_increment,
 typeOfTesting varchar(100) not null,
 dateOfTesting datetime  not null,
 numberOfTesting int not null,
-testingTime time,
 resultOfTesting int not null, 
 jobApplication int not null
 );
