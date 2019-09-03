@@ -10,9 +10,9 @@ id int not null primary key auto_increment,
 firstName varchar(50) not null,
 lastName varchar(50) not null,
 address varchar(50) not null,
-phoneNumber int not null,
+phoneNumber varchar(50) not null,
 email varchar(100) not null,
-personalIdentificationNumber int,
+personalIdentificationNumber varchar(50),
 applicantCv varchar(2083) not null,
 motivationalLetter varchar(2083) not null
 );
